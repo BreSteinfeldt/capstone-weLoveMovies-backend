@@ -24,12 +24,13 @@ function list(is_showing) {
   if (is_showing) {
     return knex("movies")
       .join("movies_theaters", "movies.movie_id", "movies_theaters.movie_id")
+      .select("movies.*")
       .where({ "movies_theaters.is_showing": true })
       .groupBy("movies.movie_id");
-  } else {
-    return knex("movies").select("*");
-  }
+    }
+  return knex("movies").select("*");
 }
+
 
 function read(movieId) {
   return knex("movies").select("movies.*").where({ movie_id: movieId }).first();
